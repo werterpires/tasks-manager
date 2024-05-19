@@ -7,60 +7,75 @@ import manager.entities.User;
 
 public class UserController {
 
+	private List<User> users;
+
+	private User user;
+
+	// Getters and Setters
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	public List<User> getUsers() {
+		return users;
+	}
+
+	// CRUD Methods
+
+	public String findUsers() {
 		try {
 			UserDao userDao = UserDao.getInstance();
-			return userDao.getUsers();
+			this.users = userDao.getUsers();
+			return "login_logon";
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("Erro ao buscar usuários");
 		}
 	}
 
-	public User getUser(int id) {
+	public String findUserById(int id) {
 		try {
 			UserDao userDao = UserDao.getInstance();
-			return userDao.getUser(id);
+			this.user = userDao.getUser(id);
+			return "user";
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("Erro ao buscar usuário");
 		}
 	}
 
-	public User getUser(String email) {
+	public String addUser(User user) {
 		try {
 			UserDao userDao = UserDao.getInstance();
-			return userDao.getUser(email);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new RuntimeException("Erro ao buscar usuário");
-		}
-	}
-
-	public User addUser(User user) {
-		try {
-			UserDao userDao = UserDao.getInstance();
-			return userDao.addUser(user);
+			User addedUser = userDao.addUser(user);
+			return "login_logon";
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("Erro ao adicionar usuário");
 		}
 	}
 
-	public User updateUser(User user) {
+	public String updateUser(User user) {
 		try {
 			UserDao userDao = UserDao.getInstance();
-			return userDao.updateUser(user);
+			this.user = userDao.updateUser(user);
+			return "user";
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("Erro ao atualizar usuário");
 		}
 	}
 
-	public void deleteUser(int id) {
+	public String deleteUser(int id) {
 		try {
 			UserDao userDao = UserDao.getInstance();
 			userDao.deleteUser(id);
+			return "login_logon";
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("Erro ao deletar usuário");
