@@ -58,12 +58,7 @@ public class UserRepository {
 		return null;
 	}
 
-	public User deleteUser(int id) {
-		for (int i = 0; i < users.size(); i++) {
-			if (users.get(i).getId() == id) {
-				return users.remove(i);
-			}
-		}
-		return null;
+	public void deleteUser(int id) {
+		users.removeIf(user -> user.getId() == id);
 	}
 }
