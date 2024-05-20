@@ -6,7 +6,7 @@ Essa é uma aplicação simples de criação, atribuição e gestão de tarefas.
 
 
 
-## Autores
+## Autor
 
 - [@werterpires](https://www.github.com/werterpires)
 
@@ -20,11 +20,6 @@ Essa é uma aplicação simples de criação, atribuição e gestão de tarefas.
     - Supervisores podem atribuir tarefas para si e para colaboradores.
     - Colaboradores podem atribuir tarefa apenas para si.
 - Criação de categorias para tarefas.
-
-
-## Aprendizados
-
-O que você aprendeu construindo esse projeto? Quais desafios você enfrentou e como você superou-os?
 
 
 ## Stack utilizada
