@@ -187,7 +187,7 @@ public class UserController {
 
 			if (user == null) {
 				FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "E-mail invalido.", null));
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "E-mail ou senha inválidos.", null));
 				return null;
 			}
 
@@ -197,7 +197,7 @@ public class UserController {
 				return null;
 			}
 
-			LoggedIn loggedIn = new LoggedIn();
+			LoggedIn loggedIn = LoggedIn.getInstance();
 			loggedIn.setUser(user);
 
 			return "categories";

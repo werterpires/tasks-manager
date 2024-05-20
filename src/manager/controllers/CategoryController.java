@@ -11,6 +11,7 @@ import javax.faces.context.FacesContext;
 import manager.dao.CategoryDao;
 import manager.entities.Category;
 /*import manager.session.LoggedIn;*/
+import manager.session.LoggedIn;
 
 @ManagedBean
 @SessionScoped
@@ -51,6 +52,11 @@ public class CategoryController {
 
 	public void findCategories() {
 		try {
+			if (!isLogged()) {
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Faça login para acessar esse recurso", null));
+				return;
+			}
 			CategoryDao categoryDao = CategoryDao.getInstance();
 			this.categories = categoryDao.getCategories();
 
@@ -62,6 +68,11 @@ public class CategoryController {
 
 	public String findCategoryById(int id) {
 		try {
+			if (!isLogged()) {
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Faça login para acessar esse recurso", null));
+				return null;
+			}
 			CategoryDao categoryDao = CategoryDao.getInstance();
 			this.category = categoryDao.getCategory(id);
 			return "category";
@@ -73,6 +84,11 @@ public class CategoryController {
 
 	public String addCategory() {
 		try {
+			if (!isLogged()) {
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Faça login para acessar esse recurso", null));
+				return null;
+			}
 			if (this.name == null || this.name.isEmpty()) {
 				FacesContext.getCurrentInstance().addMessage(null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR, "O campo Nome é obrigatório.", null));
@@ -88,7 +104,7 @@ public class CategoryController {
 			this.category = new Category();
 			this.name = null;
 
-			return "categories";
+			return "categories?faces-redirect=true";
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -100,6 +116,11 @@ public class CategoryController {
 
 	public String updateCategory() {
 		try {
+			if (!isLogged()) {
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Faça login para acessar esse recurso", null));
+				return null;
+			}
 			CategoryDao categoryDao = CategoryDao.getInstance();
 			this.category = categoryDao.updateCategory(this.category);
 			return "categories";
@@ -111,6 +132,11 @@ public class CategoryController {
 
 	public String deleteCategory(String id) {
 		try {
+			if (!isLogged()) {
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Faça login para acessar esse recurso", null));
+				return null;
+			}
 			System.out.println("deleting category with id: " + id);
 			CategoryDao categoryDao = CategoryDao.getInstance();
 			categoryDao.deleteCategory(Integer.parseInt(id));
@@ -121,7 +147,7 @@ public class CategoryController {
 				}
 			}
 
-			return "categories";
+			return "categories?faces-redirect=true";
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("Erro ao deletar categoria");
@@ -129,14 +155,19 @@ public class CategoryController {
 	}
 
 	public String selectCategory(String id) {
+		if (!isLogged()) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Faça login para acessar esse recurso", null));
+			return null;
+		}
 		int idInt = Integer.parseInt(id);
 		findCategoryById(idInt);
 		return "category";
 	}
 
-	public String faznada() {
-		System.out.println("faznada");
-		return "categories";
+	public Boolean isLogged() {
+		LoggedIn loggedIn = LoggedIn.getInstance();
+		return loggedIn.isLogged();
 	}
 
 }

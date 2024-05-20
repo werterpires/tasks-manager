@@ -9,10 +9,20 @@ import manager.entities.User;
 @SessionScoped
 public class LoggedIn {
 
+	private static LoggedIn instance;
+
 	private User user;
 
 	public LoggedIn() {
 
+	}
+
+	public static LoggedIn getInstance() {
+		if (instance == null) {
+			instance = new LoggedIn();
+		}
+
+		return instance;
 	}
 
 	public User getUser() {
@@ -21,6 +31,10 @@ public class LoggedIn {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public boolean isLogged() {
+		return user != null;
 	}
 
 }
