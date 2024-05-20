@@ -7,6 +7,15 @@
 	<h:outputStylesheet library="css" name="login_logon.css" />
 </h:head>
 <h:body>
+<h:form id="nav">
+        <h:link class="link" value="Categories" outcome="/categories.xhtml" />
+        
+        <h:link class="link" value="Tasks" outcome="/tasks.xhtml" />
+        
+        <h:link class="link" value="Login" outcome="/login.xhtml" />
+        
+        <h:link class="link" value="Logon" outcome="/logon.xhtml" />
+</h:form>
 	<div class="container">
 		<h:form>
 			<h:messages globalOnly="true" style="color: red;" />

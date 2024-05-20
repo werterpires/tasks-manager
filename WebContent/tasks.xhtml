@@ -1,19 +1,33 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core">
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<title>Tarefas</title>
 	<h:outputStylesheet library="css" name="login_logon.css" />
 	<h:outputStylesheet library="css" name="lists.css" />
+	
 </h:head>
 <f:metadata>
 	<f:event type="preRenderView"
 		listener="#{taskController.initializeTasks}" />
-		<f:event type="preRenderView" listener="#{categoryController.findCategories()}" />
+	<f:event type="preRenderView"
+		listener="#{categoryController.findCategories()}" />
 </f:metadata>
 <h:body>
+	<h:form id="nav">
+        <h:link class="link" value="Categories" outcome="/categories.xhtml" />
+        
+        <h:link class="link" value="Tasks" outcome="/tasks.xhtml" />
+        
+        <h:link class="link" value="Login" outcome="/login.xhtml" />
+        
+        <h:link class="link" value="Logon" outcome="/logon.xhtml" />
+</h:form>
+
 	<div class="container">
+	
 		<h2>Tarefas</h2>
 
 		<h:form>
@@ -61,18 +75,17 @@
 
 
 				<h:commandButton value="Cadastrar"
-					action="#{taskController.addTask}"
-					styleClass="btn-cadastrar" />
+					action="#{taskController.addTask}" styleClass="btn-cadastrar" />
 			</div>
 		</h:form>
 
 		<hr />
 		<br />
-		<h4> Tarefas para execução </h4>
+		<h4>Tarefas para execução</h4>
 		<h:form>
-			<h:dataTable value="#{taskController.executorTasks}"
-				var="tempTask" border="1" styleClass="table"
-				headerClass="table-header" rowClasses="table-row">
+			<h:dataTable value="#{taskController.executorTasks}" var="tempTask"
+				border="1" styleClass="table" headerClass="table-header"
+				rowClasses="table-row">
 				<h:column>
 					<f:facet name="header">
 						<p class="item-header">Título</p>
@@ -91,23 +104,24 @@
 				</h:column>
 				<h:column>
 					<f:facet name="header">Status</f:facet>
-					<div class="item-value">
-						#{tempTask.status == 'TODO' ? 'A fazer' : tempTask.status == 'DOING' ? 'Fazendo' : 'Feito'}</div>
+					<div class="item-value">#{tempTask.status == 'TODO' ? 'A
+						fazer' : tempTask.status == 'DOING' ? 'Fazendo' : 'Feito'}</div>
 				</h:column>
 				<h:column>
 					<f:facet name="header">Criador</f:facet>
-					<div class="item-value">#{tempTask.creatorName} (#{tempTask.creatorEmail})</div>
+					<div class="item-value">#{tempTask.creatorName}
+						(#{tempTask.creatorEmail})</div>
 				</h:column>
 
-				
+
 			</h:dataTable>
 		</h:form>
-		
-		<h4> Tarefas criadas por você </h4>
+
+		<h4>Tarefas criadas por você</h4>
 		<h:form>
-			<h:dataTable value="#{taskController.cratorTasks}"
-				var="tempTask" border="1" styleClass="table"
-				headerClass="table-header" rowClasses="table-row">
+			<h:dataTable value="#{taskController.cratorTasks}" var="tempTask"
+				border="1" styleClass="table" headerClass="table-header"
+				rowClasses="table-row">
 				<h:column>
 					<f:facet name="header">
 						<p class="item-header">Título</p>
@@ -126,12 +140,13 @@
 				</h:column>
 				<h:column>
 					<f:facet name="header">Status</f:facet>
-					<div class="item-value">
-						#{tempTask.status == 'TODO' ? 'A fazer' : tempTask.status == 'DOING' ? 'Fazendo' : 'Feito'}</div>
+					<div class="item-value">#{tempTask.status == 'TODO' ? 'A
+						fazer' : tempTask.status == 'DOING' ? 'Fazendo' : 'Feito'}</div>
 				</h:column>
 				<h:column>
 					<f:facet name="header">Executor</f:facet>
-					<div class="item-value">#{tempTask.executerName} (#{tempTask.executerEmail})</div>
+					<div class="item-value">#{tempTask.executerName}
+						(#{tempTask.executerEmail})</div>
 				</h:column>
 
 				<h:column>
