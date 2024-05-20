@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+	<title>Cadastro</title>
+	<h:outputStylesheet library="css" name="login_logon.css" />
+</h:head>
+<h:body>
+	<div class="container">
+		<h:form>
+			<h:messages globalOnly="true" style="color: red;" />
+			<div class="cadastro-panel">
+				<h3>Cadastro</h3>
+				<h:outputLabel for="nome">Nome:</h:outputLabel>
+				<h:inputText id="nome" value="#{userController.name}"
+					required="true" requiredMessage="Insira seu nome completo."
+					validatorMessage="Nome deve ter entre 3 e 50 caracteres.">
+					<f:validateLength minimum="3" maximum="50" />
+				</h:inputText>
+				<h:message class="errorMessage" for="nome" />
+
+				<h:outputLabel for="emailCad">E-mail:</h:outputLabel>
+				<h:inputText id="emailCad" value="#{userController.email}"
+					required="true" requiredMessage="Insira seu e-mail."
+					validatorMessage="Insira um e-mail válido para continuar">
+					<f:validateRegex pattern="^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$" />
+				</h:inputText>
+				<h:message class="errorMessage" for="emailCad" />
+
+				<h:outputLabel for="senhaCad">Senha:</h:outputLabel>
+				<h:inputSecret id="senhaCad" value="#{userController.password}"
+					required="true" requiredMessage="Insira uma senha."
+					validatorMessage="Senha deve ter entre 6 e 10 caracteres.">
+					<f:validateLength minimum="6" maximum="10" />
+				</h:inputSecret>
+				<h:message class="errorMessage" for="senhaCad" />
+
+				<h:outputLabel for="nivel">Nível:</h:outputLabel>
+				<h:selectOneMenu id="nivel" value="#{userController.level}"
+					required="true" requiredMessage="Selecione o seu nível hierárquico">
+					<f:selectItem itemLabel="Selecione..." itemValue="" />
+					<f:selectItem itemLabel="Colaborador" itemValue="1" />
+					<f:selectItem itemLabel="Supervisor" itemValue="2" />
+					<f:selectItem itemLabel="Gerente" itemValue="3" />
+				</h:selectOneMenu>
+				<h:message class="errorMessage" for="nivel" />
+
+				<h:commandButton value="Cadastrar"
+					action="#{userController.addUser}" styleClass="btn-cadastrar" />
+			</div>
+		</h:form>
+
+	</div>
+</h:body>
+</html>

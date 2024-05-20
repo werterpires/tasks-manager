@@ -129,7 +129,13 @@ public class UserController {
 			User addedUser = userDao.addUser(name, email, password, level);
 			getUsers().add(addedUser);
 
-			return "testes"; // Página de sucesso
+			this.user = new User();
+			this.name = null;
+			this.email = null;
+			this.password = null;
+			this.level = 0;
+
+			return "login"; // Página de sucesso
 
 		} catch (Exception e) {
 			e.printStackTrace();

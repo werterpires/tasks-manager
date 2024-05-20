@@ -44,6 +44,18 @@ public class UserRepository {
 	}
 
 	public User addUser(String name, String email, String password, int role) {
+
+		boolean emailExists = false;
+		for (User user : users) {
+			if (user.getEmail().equals(email)) {
+				emailExists = true;
+				break;
+			}
+		}
+		if (emailExists) {
+			throw new IllegalArgumentException("Email ja existe");
+		}
+
 		int id = incrementId();
 		User user = new User(id, name, email, password, role);
 		users.add(user);

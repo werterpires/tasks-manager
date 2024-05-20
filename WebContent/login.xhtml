@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+	<title>Login</title>
+	<h:outputStylesheet library="css" name="login_logon.css" />
+</h:head>
+<h:body>
+	<div class="container">
+		<h:form>
+
+			<!-- Lado esquerdo: Tela de Login -->
+			<div class="login-panel">
+				<h3>Login</h3>
+				<h:outputLabel for="emailCad">E-mail:</h:outputLabel>
+				<h:inputText id="emailCad" value="#{userController.email}"
+					required="true" requiredMessage="Insira seu e-mail."
+					validatorMessage="Insira um e-mail válido para continuar">
+					<f:validateRegex pattern="^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$" />
+				</h:inputText>
+				<h:message class="errorMessage" for="emailCad" />
+				
+				<h:outputLabel for="senhaCad">Senha:</h:outputLabel>
+				<h:inputSecret id="senhaCad" value="#{userController.password}"
+					required="true" requiredMessage="Insira uma senha."
+					validatorMessage="Senha deve ter entre 6 e 10 caracteres.">
+					<f:validateLength minimum="6" maximum="10" />
+				</h:inputSecret>
+				<h:message class="errorMessage" for="senhaCad" />
+
+				<h:commandButton value="Entrar"
+					action="#{userController.realizarLogin}" styleClass="btn-login" />
+			</div>
+		</h:form>
+
+
+	</div>
+</h:body>
+</html>
