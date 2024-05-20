@@ -5,11 +5,150 @@
 <h:head>
 	<title>Tarefas</title>
 	<h:outputStylesheet library="css" name="login_logon.css" />
+	<h:outputStylesheet library="css" name="lists.css" />
 </h:head>
+<f:metadata>
+	<f:event type="preRenderView"
+		listener="#{taskController.initializeTasks}" />
+		<f:event type="preRenderView" listener="#{categoryController.findCategories()}" />
+</f:metadata>
 <h:body>
 	<div class="container">
-	Aqui aparecerão as tarefas
-	
+		<h2>Tarefas</h2>
+
+		<h:form>
+			<h:messages globalOnly="true" style="color: red;" />
+			<div class="cadastro-panel">
+				<h3>Criar Tarefa</h3>
+				<h:outputLabel for="nome">Nome:</h:outputLabel>
+				<h:inputText id="nome" value="#{taskController.name}"
+					required="true" requiredMessage="Insira um nome para a tarefa"
+					validatorMessage="O nome da categoria deve ter entre 3 e 50 caracteres.">
+					<f:validateLength minimum="3" maximum="50" />
+				</h:inputText>
+				<h:message class="errorMessage" for="nome" />
+
+				<h:outputLabel for="description">Descrição:</h:outputLabel>
+				<h:inputText id="description" value="#{taskController.description}"
+					required="true"
+					requiredMessage="Insira uma descrição para a tarefa."
+					validatorMessage="O nome da categoria deve ter entre 3 e 50 caracteres.">
+					<f:validateLength minimum="3" maximum="100" />
+				</h:inputText>
+				<h:message class="errorMessage" for="description" />
+
+				<h:outputLabel for="status">Status:</h:outputLabel>
+				<h:selectOneMenu id="status" value="#{taskController.status}">
+					<f:selectItem itemValue="TODO" itemLabel="A fazer" />
+					<f:selectItem itemValue="DOING" itemLabel="Fazendo" />
+					<f:selectItem itemValue="DONE" itemLabel="Feito" />
+				</h:selectOneMenu>
+
+				<h:outputLabel for="category">Categoria</h:outputLabel>
+				<h:selectOneMenu id="category" value="#{taskController.categoryId}">
+					<f:selectItems value="#{categoryController.categories}"
+						var="category" itemValue="#{category.id}"
+						itemLabel="#{category.name}" />
+				</h:selectOneMenu>
+
+				<h:outputLabel>Executor</h:outputLabel>
+				<h:selectOneMenu id="executor"
+					value="#{taskController.executerUserId}">
+					<f:selectItems value="#{taskController.subordinates}" var="user"
+						itemValue="#{user.id}" itemLabel="#{user.name}" />
+				</h:selectOneMenu>
+
+
+
+				<h:commandButton value="Cadastrar"
+					action="#{taskController.addTask}"
+					styleClass="btn-cadastrar" />
+			</div>
+		</h:form>
+
+		<hr />
+		<br />
+		<h4> Tarefas para execução </h4>
+		<h:form>
+			<h:dataTable value="#{taskController.executorTasks}"
+				var="tempTask" border="1" styleClass="table"
+				headerClass="table-header" rowClasses="table-row">
+				<h:column>
+					<f:facet name="header">
+						<p class="item-header">Título</p>
+					</f:facet>
+					<div class="item-value">#{tempTask.name}</div>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<p class="item-header">Descrição</p>
+					</f:facet>
+					<div class="item-value">#{tempTask.description}</div>
+				</h:column>
+				<h:column>
+					<f:facet name="header">Categoria</f:facet>
+					<div class="item-value">#{tempTask.categoryName}</div>
+				</h:column>
+				<h:column>
+					<f:facet name="header">Status</f:facet>
+					<div class="item-value">
+						#{tempTask.status == 'TODO' ? 'A fazer' : tempTask.status == 'DOING' ? 'Fazendo' : 'Feito'}</div>
+				</h:column>
+				<h:column>
+					<f:facet name="header">Criador</f:facet>
+					<div class="item-value">#{tempTask.creatorName} (#{tempTask.creatorEmail})</div>
+				</h:column>
+
+				
+			</h:dataTable>
+		</h:form>
+		
+		<h4> Tarefas criadas por você </h4>
+		<h:form>
+			<h:dataTable value="#{taskController.cratorTasks}"
+				var="tempTask" border="1" styleClass="table"
+				headerClass="table-header" rowClasses="table-row">
+				<h:column>
+					<f:facet name="header">
+						<p class="item-header">Título</p>
+					</f:facet>
+					<div class="item-value">#{tempTask.name}</div>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<p class="item-header">Descrição</p>
+					</f:facet>
+					<div class="item-value">#{tempTask.description}</div>
+				</h:column>
+				<h:column>
+					<f:facet name="header">Categoria</f:facet>
+					<div class="item-value">#{tempTask.categoryName}</div>
+				</h:column>
+				<h:column>
+					<f:facet name="header">Status</f:facet>
+					<div class="item-value">
+						#{tempTask.status == 'TODO' ? 'A fazer' : tempTask.status == 'DOING' ? 'Fazendo' : 'Feito'}</div>
+				</h:column>
+				<h:column>
+					<f:facet name="header">Executor</f:facet>
+					<div class="item-value">#{tempTask.executerName} (#{tempTask.executerEmail})</div>
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Ações</f:facet>
+					<div class="item-value">
+						<h:commandButton value="Excluir"
+							action="#{taskController.deleteTask(tempTask.id)}" />
+
+
+						<h:commandButton value="Editar"
+							action="#{taskController.selectTask(tempTask.id)}" />
+					</div>
+
+
+				</h:column>
+			</h:dataTable>
+		</h:form>
 	</div>
 </h:body>
 </html>

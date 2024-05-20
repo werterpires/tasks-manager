@@ -80,4 +80,15 @@ public class UserRepository {
 		return users.get(users.size() - 1).getId() + 1;
 	}
 
+	public List<User> getSubordinates(int LeaderLevel) {
+
+		List<User> subordinates = new ArrayList<>();
+		for (User user : users) {
+			if (user.getLevel() < LeaderLevel) {
+				subordinates.add(user);
+			}
+		}
+		return subordinates;
+	}
+
 }

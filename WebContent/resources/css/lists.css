@@ -1,5 +1,15 @@
 @charset "ISO-8859-1";
 
+*{
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body{
+	padding-bottom:15px;
+}
+
 .table {
 	max-width: 80vw;
 	margin: 0 auto;
