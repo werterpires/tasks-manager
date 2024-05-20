@@ -6,7 +6,9 @@ import java.util.List;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 
+import manager.dao.TaskDao;
 import manager.entities.Category;
+import manager.entities.Task;
 
 @ManagedBean
 @ApplicationScoped
@@ -59,6 +61,22 @@ public class CategoryRepository {
 
 		if (category == null) {
 			throw new RuntimeException("Category not found");
+		}
+
+		TaskDao taskDao = TaskDao.getInstance();
+		List<Task> tasks = taskDao.getTasks();
+
+		Task taskWithCategory = null;
+		for (Task task : tasks) {
+			if (task.getCategoryId() == id) {
+				taskWithCategory = task;
+				break;
+			}
+		}
+
+		if (taskWithCategory != null) {
+			throw new RuntimeException("Essa categoria não pode ser deletada, porque é usada por uma tarefa.");
+
 		}
 
 		categories.removeIf(categ -> categ.getId() == id);

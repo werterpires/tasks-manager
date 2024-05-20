@@ -150,7 +150,9 @@ public class CategoryController {
 			return "categories?faces-redirect=true";
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new RuntimeException("Erro ao deletar categoria");
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Erro ao deletar categoria: " + e.getMessage(), null));
+			return null;
 		}
 	}
 

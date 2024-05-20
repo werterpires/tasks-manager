@@ -305,7 +305,9 @@ public class TaskController {
 			return "tasks?faces-redirect=true";
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new RuntimeException("Erro ao deletar tarefa");
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao adicionar tarefa: " + e.getMessage(), null));
+			return null;
 		}
 	}
 
