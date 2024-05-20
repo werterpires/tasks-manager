@@ -43,7 +43,9 @@ public class UserRepository {
 		return null;
 	}
 
-	public User addUser(User user) {
+	public User addUser(String name, String email, String password, int role) {
+		int id = incrementId();
+		User user = new User(id, name, email, password, role);
 		users.add(user);
 		return user;
 	}
@@ -61,4 +63,9 @@ public class UserRepository {
 	public void deleteUser(int id) {
 		users.removeIf(user -> user.getId() == id);
 	}
+
+	private int incrementId() {
+		return users.get(users.size() - 1).getId() + 1;
+	}
+
 }

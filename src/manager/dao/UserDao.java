@@ -34,8 +34,8 @@ public class UserDao {
 		return userRepository.getUser(email);
 	}
 
-	public User addUser(User user) {
-		return userRepository.addUser(user);
+	public User addUser(String name, String email, String password, int role) {
+		return userRepository.addUser(name, email, password, role);
 	}
 
 	public User updateUser(User user) {

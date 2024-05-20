@@ -1,15 +1,28 @@
 package manager.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 
 import manager.dao.UserDao;
 import manager.entities.User;
 
+@ManagedBean
+@RequestScoped
 public class UserController {
 
 	private List<User> users;
 
 	private User user;
+
+	private String name;
+	private String email;
+	private String password;
+	private int level;
 
 	// Getters and Setters
 
@@ -22,16 +35,51 @@ public class UserController {
 	}
 
 	public List<User> getUsers() {
+		if (users == null) {
+			users = new ArrayList<>();
+		}
 		return users;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
 	}
 
 	// CRUD Methods
 
-	public String findUsers() {
+	public void findUsers() {
 		try {
 			UserDao userDao = UserDao.getInstance();
 			this.users = userDao.getUsers();
-			return "login_logon";
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("Erro ao buscar usuários");
@@ -49,14 +97,45 @@ public class UserController {
 		}
 	}
 
-	public String addUser(User user) {
+	public String addUser() {
 		try {
+			if (this.name == null || this.name.isEmpty()) {
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "O campo Nome é obrigatório.", null));
+				return null;
+			}
+			if (this.email == null || this.email.isEmpty()) {
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "O campo E-mail é obrigatório.", null));
+				return null;
+			}
+			if (this.password == null || this.password.isEmpty()) {
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "O campo Senha é obrigatório.", null));
+				return null;
+			}
+			if (this.level == 0) {
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Selecione um Nível.", null));
+				return null;
+			}
+
+			String name = this.name;
+			String email = this.email;
+			String password = this.password;
+			int level = this.level;
+
 			UserDao userDao = UserDao.getInstance();
-			User addedUser = userDao.addUser(user);
-			return "login_logon";
+			User addedUser = userDao.addUser(name, email, password, level);
+			getUsers().add(addedUser);
+
+			return "testes"; // Página de sucesso
+
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new RuntimeException("Erro ao adicionar usuário");
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Erro ao adicionar usuário: " + e.getMessage(), null));
+			return null;
 		}
 	}
 
