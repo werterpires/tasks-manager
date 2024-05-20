@@ -10,6 +10,7 @@ import javax.faces.context.FacesContext;
 
 import manager.dao.UserDao;
 import manager.entities.User;
+import manager.session.LoggedIn;
 
 @ManagedBean
 @RequestScoped
@@ -165,5 +166,47 @@ public class UserController {
 			e.printStackTrace();
 			throw new RuntimeException("Erro ao deletar usuário");
 		}
+	}
+
+	public String login() {
+
+		try {
+			if (this.email == null || this.email.isEmpty()) {
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "O campo E-mail é obrigatório.", null));
+				return null;
+			}
+
+			if (this.password == null || this.password.isEmpty()) {
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "O campo Senha é obrigatório.", null));
+				return null;
+			}
+			UserDao userDao = UserDao.getInstance();
+			User user = userDao.getUser(this.email);
+
+			if (user == null) {
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "E-mail invalido.", null));
+				return null;
+			}
+
+			if (!user.getPassword().equals(this.password)) {
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "E-mail ou senha inválidos.", null));
+				return null;
+			}
+
+			LoggedIn loggedIn = new LoggedIn();
+			loggedIn.setUser(user);
+
+			return "tasks";
+		} catch (Exception e) {
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "O campo E-mail é obrigatório.", null));
+			return null;
+		}
+
 	}
 }
