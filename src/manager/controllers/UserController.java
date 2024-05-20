@@ -200,7 +200,7 @@ public class UserController {
 			LoggedIn loggedIn = new LoggedIn();
 			loggedIn.setUser(user);
 
-			return "tasks";
+			return "categories";
 		} catch (Exception e) {
 			e.printStackTrace();
 			FacesContext.getCurrentInstance().addMessage(null,

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+	<title>Tarefas</title>
+	<h:outputStylesheet library="css" name="login_logon.css" />
+	<h:outputStylesheet library="css" name="lists.css" />
+</h:head>
+
+
+<!-- <f:metadata>
+	<f:event type="preRenderView" listener="#{categoryController.findCategories()}" />
+</f:metadata> -->
+
+<h:body>
+	<div class="container">
+		<h2>Categoria</h2>
+
+		<h:form>
+			<h:messages globalOnly="true" style="color: red;" />
+			<div class="cadastro-panel">
+				<h3>Editar categoria</h3>
+				<h:outputLabel for="nome">Nome:</h:outputLabel>
+				<h:inputText id="nome" value="#{categoryController.category.name}"
+					required="true" requiredMessage="Insira um nome para a categoria."
+					validatorMessage="O nome da categoria deve ter entre 3 e 50 caracteres.">
+					<f:validateLength minimum="3" maximum="50" />
+				</h:inputText>
+				<h:message class="errorMessage" for="nome" />
+
+				<h:commandButton value="Cadastrar"
+					action="#{categoryController.updateCategory}"
+					styleClass="btn-cadastrar" />
+			</div>
+		</h:form>
+
+	</div>
+</h:body>
+</html>

@@ -1,0 +1,36 @@
+@charset "ISO-8859-1";
+
+.table {
+	max-width: 80vw;
+	margin: 0 auto;
+	padding: 20px;
+	background-color: #fff;
+	border-radius: 10px;
+	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+	
+	border-collapse: collapse;
+	border: none;
+}
+
+.item-header {
+	padding: 5px;
+	
+}
+
+.item-value{
+	padding: 20px;
+	background-color: #fff;
+	text-align: left;
+	
+
+}
+
+.table-header {
+	font-weight: bold;
+	background-color: #445760;
+	color: #fff;	
+}
+
+.table-row {
+	border-bottom: 1px dashed #ddd;
+}
