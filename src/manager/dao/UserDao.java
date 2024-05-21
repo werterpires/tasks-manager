@@ -47,7 +47,7 @@ public class UserDao {
 	}
 
 	public List<User> getSubordinates(int level) {
-		System.out.println("Level: " + level);
+
 		return userRepository.getSubordinates(level);
 	}
 

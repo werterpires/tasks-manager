@@ -134,7 +134,6 @@ public class TaskController {
 
 	public void initializeTasks() {
 		try {
-			System.out.println("initializeTasks");
 
 			if (!isLogged()) {
 				FacesContext.getCurrentInstance().addMessage(null,
@@ -145,9 +144,9 @@ public class TaskController {
 			UserDao userDao = UserDao.getInstance();
 
 			User user = loggedIn.getUser();
-			System.out.println("user:" + user);
+
 			List<User> subordinates = userDao.getSubordinates(user.getLevel());
-			System.out.println("Subordinados" + subordinates);
+
 			subordinates.add(user);
 			this.subordinates = subordinates;
 			int userId = user.getId();
@@ -292,7 +291,7 @@ public class TaskController {
 						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Faça login para acessar esse recurso", null));
 				return null;
 			}
-			System.out.println("deleting task with id: " + id);
+
 			TaskDao taskDao = TaskDao.getInstance();
 			taskDao.deleteTask(Integer.parseInt(id));
 			for (Task task : tasks) {
